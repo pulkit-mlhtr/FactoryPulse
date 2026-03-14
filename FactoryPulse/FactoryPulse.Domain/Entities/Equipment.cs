@@ -18,11 +18,15 @@ namespace FactoryPulse.Domain.Entities
 
         public EquipmentState CurrentState { get; private set; } = EquipmentState.Red;
 
-        public Guid? CurrentOrderId { get; private set; }
+        public long? CurrentOrderId { get; private set; }
 
         public DateTime UpdatedAt { get; private set; } = DateTime.UtcNow;
 
-        public void UpdateState(EquipmentState newState, Guid? orderId)
+        public ICollection<EquipmentStateHistory> StateHistories { get; set; } = [];
+
+        public ICollection<Order> ScheduledOrders { get; set; } = [];
+
+        public void UpdateState(EquipmentState newState, long? orderId)
         {
             CurrentState = newState;
             CurrentOrderId = orderId;

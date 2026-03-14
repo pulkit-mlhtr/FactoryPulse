@@ -9,7 +9,7 @@ namespace FactoryPulse.Infrastructure.Repository.Interface
     {
         Task<List<Equipment>> GetAllAsync();
 
-        Task<Equipment?> GetByIdAsync(Guid id);
+        Task<Equipment?> GetByIdAsync(string id);
 
         Task UpdateAsync(Equipment equipment);
     }

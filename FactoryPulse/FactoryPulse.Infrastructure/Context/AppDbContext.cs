@@ -6,12 +6,12 @@ using System.Text;
 
 namespace FactoryPulse.Infrastructure.Context
 {
-    internal class AppDbContext : DbContext
+    public class AppDbContext : DbContext
     {
         public DbSet<Equipment> Equipments { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<EquipmentStateLog> EquipmentStateLogs { get; set; }
+        public DbSet<EquipmentStateHistory> EquipmentStateHistories { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options)
      : base(options)

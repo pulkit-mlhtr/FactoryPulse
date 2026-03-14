@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FactoryPulse.Domain.Entities
 {
-    public class EquipmentStateLog(
+    public class EquipmentStateHistory(
         string equipmentId,
         EquipmentState previousState,
         EquipmentState newState,
@@ -25,5 +25,7 @@ namespace FactoryPulse.Domain.Entities
         public Guid? OrderId { get; private set; } = orderId;
 
         public DateTime ChangedAt { get; private set; } = DateTime.UtcNow;
+
+        public Equipment Equipment { get; set; } = null!;
     }
 }
