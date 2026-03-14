@@ -4,10 +4,10 @@ var server = builder.AddProject<Projects.FactoryPulse_Server>("server")
     .WithHttpHealthCheck("/health")
     .WithExternalHttpEndpoints();
 
-var webfrontend = builder.AddViteApp("webfrontend", "../frontend")
+var webfrontend = builder.AddViteApp("webfrontend", "../FactoryPulse.Dashboard")
     .WithReference(server)
     .WaitFor(server);
 
 server.PublishWithContainerFiles(webfrontend, "wwwroot");
 
-builder.Build().Run();
+await builder.Build().RunAsync();
