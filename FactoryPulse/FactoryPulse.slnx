@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="FactoryPulse.AppHost/FactoryPulse.AppHost.csproj" />
+  <Project Path="FactoryPulse.Server/FactoryPulse.Server.csproj" />
+  <Project Path="frontend/frontend.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+</Solution>
