@@ -7,7 +7,7 @@ namespace FactoryPulse.Domain.Entities
 {
     public class Order(string orderNumber, Guid equipmentId)
     {
-        public Guid Id { get; private set; } = Guid.NewGuid();
+        public Guid OrderId { get; private set; } = Guid.NewGuid();
 
         public string OrderNumber { get; private set; } = orderNumber;
 

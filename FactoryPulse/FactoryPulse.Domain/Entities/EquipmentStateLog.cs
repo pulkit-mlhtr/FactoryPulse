@@ -12,7 +12,7 @@ namespace FactoryPulse.Domain.Entities
         Guid changedByUserId,
         Guid? orderId)
     {
-        public Guid Id { get; private set; } = Guid.NewGuid();
+        public Guid LogId { get; private set; } = Guid.NewGuid();
 
         public string EquipmentId { get; private set; } = equipmentId;
 

@@ -8,7 +8,7 @@ namespace FactoryPulse.Domain.Entities
 {
     public class Equipment(int machineNumber, string name, string factory, string productionLine)
     {
-        public string Id { get; private set; } = StringHelper.Concat(factory,productionLine,name, machineNumber.ToString());
+        public string EquipmentId { get; private set; } = StringHelper.Concat(factory,productionLine,name, machineNumber.ToString());
 
         public string Name { get; private set; } = name;
 

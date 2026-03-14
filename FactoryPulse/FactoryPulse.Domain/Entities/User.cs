@@ -7,7 +7,7 @@ namespace FactoryPulse.Domain.Entities
 {
     public class User(string name, string email, UserRole role)
     {
-        public Guid Id { get; private set; } = Guid.NewGuid();
+        public Guid UserId { get; private set; } = Guid.NewGuid();
 
         public string Name { get; private set; } = name;
 
