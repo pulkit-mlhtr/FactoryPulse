@@ -1,15 +1,14 @@
 ﻿using FactoryPulse.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
-namespace FactoryPulse.Infrastructure.Repository.Interface
+namespace FactoryPulse.Domain.Interface
 {
     public interface IEquipmentRepository
     {
-        Task<List<Equipment>> GetAllAsync();
-
-        Task<Equipment?> GetByIdAsync(string id);
+        Task<List<Equipment>> GetAsync(Expression<Func<Equipment, bool>> filter);
 
         Task UpdateAsync(Equipment equipment);
     }

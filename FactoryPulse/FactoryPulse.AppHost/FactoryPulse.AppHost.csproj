@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FactoryPulse.Server\FactoryPulse.Server.csproj" />
+    <ProjectReference Include="..\FactoryPulse.API\FactoryPulse.API.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,6 +1,6 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-var server = builder.AddProject<Projects.FactoryPulse_Server>("server")
+var server = builder.AddProject<Projects.FactoryPulse_API>("server")
     .WithHttpHealthCheck("/health")
     .WithExternalHttpEndpoints();
 

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FactoryPulse.Infrastructure.Repository.Interface
+namespace FactoryPulse.Domain.Interfaces
 {
     public interface IEquipmentStateHistoryRepository
     {

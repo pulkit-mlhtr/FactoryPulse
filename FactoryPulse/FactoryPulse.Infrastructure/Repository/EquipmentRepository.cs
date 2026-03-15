@@ -5,22 +5,17 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using FactoryPulse.Domain.Entities;
 using FactoryPulse.Infrastructure.Context;
-using FactoryPulse.Infrastructure.Repository.Interface;
+using FactoryPulse.Domain.Interface;
+using System.Linq.Expressions;
 
 namespace FactoryPulse.Infrastructure.Repository
 {
     public class EquipmentRepository(AppDbContext context) : IEquipmentRepository
     {       
-        public async Task<List<Equipment>> GetAllAsync()
+        public async Task<List<Equipment>> GetAsync(Expression<Func<Equipment,bool>> filter)
         {
-            return await context.Equipments.ToListAsync();
-        }
-
-        public async Task<Equipment?> GetByIdAsync(string id)
-        {
-            return await context.Equipments
-                .FirstOrDefaultAsync(x => x.EquipmentId == id);
-        }
+            return await context.Equipments.Where(filter).ToListAsync();
+        }       
 
         public async Task UpdateAsync(Equipment equipment)
         {

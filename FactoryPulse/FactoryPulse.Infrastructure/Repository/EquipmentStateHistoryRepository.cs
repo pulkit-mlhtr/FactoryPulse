@@ -1,9 +1,6 @@
 ﻿using FactoryPulse.Domain.Entities;
+using FactoryPulse.Domain.Interfaces;
 using FactoryPulse.Infrastructure.Context;
-using FactoryPulse.Infrastructure.Repository.Interface;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FactoryPulse.Infrastructure.Repository
 {

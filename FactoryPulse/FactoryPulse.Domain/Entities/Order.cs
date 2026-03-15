@@ -5,11 +5,13 @@ using System.Text;
 
 namespace FactoryPulse.Domain.Entities
 {
-    public class Order(long orderNumber, string equipmentId)
+    public class Order
     {
-        public long OrderId { get; private set; } = orderNumber;
+        public long OrderId { get; private set; }
 
-        public string EquipmentId { get; private set; } = equipmentId;
+        public long EquipmentId { get; private set; }
+
+        public int Quantity { get; private set; }
 
         public DateTime StartTime { get; private set; } = DateTime.UtcNow;
 
@@ -22,6 +24,15 @@ namespace FactoryPulse.Domain.Entities
         {
             Status = OrderStatus.Completed;
             EndTime = DateTime.UtcNow;
+        }
+
+        private Order() { }
+
+        public Order(long orderNumber, long equipmentId, int quantity)
+        {
+           OrderId = orderNumber;  
+            EquipmentId = equipmentId;
+            Quantity = quantity;
         }
     }
 }

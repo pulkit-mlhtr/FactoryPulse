@@ -11,32 +11,19 @@ namespace FactoryPulse.Infrastructure.Configuration
     {
         public void Configure(EntityTypeBuilder<EquipmentStateHistory> builder)
         {
-            builder.ToTable("EquipmentStateHistories");
-            builder.HasKey(x=>x.LogId);
-
+            builder.ToTable("equipment_state_histories");
+            builder.HasKey(h => h.LogId);
+            builder.Property(h => h.ChangedBy).IsRequired().HasMaxLength(100);
+            builder.Property(h => h.EquipmentId).IsRequired();
             builder.Property(x => x.PreviousState)
-                .IsRequired();
-
+               .IsRequired();
             builder.Property(x => x.NewState)
                 .IsRequired();
 
-            builder.Property(x => x.ChangedByUserId)
-                .IsRequired();
-
-            builder.Property(x => x.ChangedAt)
-                .IsRequired();  
-
-            builder.HasOne(x => x.Equipment)
-                .WithMany(e => e.StateHistories)
-                .HasForeignKey(x => x.EquipmentId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasIndex(x => x.LogId);
-
-            builder.Property(x => x.EquipmentId)
-                .IsRequired();                
-
-
+            builder.HasOne(h => h.Equipment)
+                   .WithMany(e => e.StateHistories)
+                   .HasForeignKey(h => h.EquipmentId)
+                   .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

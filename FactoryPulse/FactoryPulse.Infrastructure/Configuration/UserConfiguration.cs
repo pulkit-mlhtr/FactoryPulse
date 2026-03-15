@@ -11,13 +11,15 @@ namespace FactoryPulse.Infrastructure.Configuration
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
+            builder.ToTable("users");
+
             builder.HasKey(u => u.UserId);
 
             builder.Property(u => u.Name)
                 .IsRequired()
                 .HasMaxLength(100);
 
-            builder.Property<string>(u => u.Email)
+            builder.Property(u => u.Email)
                 .IsRequired();
 
             builder.Property(u => u.Role)
@@ -25,6 +27,9 @@ namespace FactoryPulse.Infrastructure.Configuration
 
             builder.HasIndex(u => u.UserId)
                 .IsUnique();
+
+            builder.HasIndex(u => u.Email)
+               .IsUnique();
 
             builder.Property(u => u.CreatedAt)
                 .HasDefaultValueSql("GETUTCDATE()")

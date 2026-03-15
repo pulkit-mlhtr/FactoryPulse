@@ -1,10 +1,14 @@
 <Solution>
-  <Project Path="FactoryPulse.AppHost/FactoryPulse.AppHost.csproj" />
-  <Project Path="FactoryPulse.Dashboard/FactoryPulse.Dashboard.esproj">
+  <Folder Name="/Tests/">
+    <Project Path="Tests/FactoryPulse.API.Tests/FactoryPulse.API.Tests.csproj" />
+  </Folder>
+  <Project Path="D:/Lego/FactoryPulse/FactoryPulse.AppHost/FactoryPulse.AppHost.csproj" />
+  <Project Path="D:/Lego/FactoryPulse/FactoryPulse.Application/FactoryPulse.Application.csproj" Id="63e19ae0-c23b-4837-a924-af8b9345c906" />
+  <Project Path="D:/Lego/FactoryPulse/FactoryPulse.Dashboard/FactoryPulse.Dashboard.esproj">
     <Build />
     <Deploy />
   </Project>
-  <Project Path="FactoryPulse.Domain/FactoryPulse.Domain.csproj" Id="bbaa55e4-1fc1-4eff-9f58-412729d47f0f" />
-  <Project Path="FactoryPulse.Infrastructure/FactoryPulse.Infrastructure.csproj" Id="8f68206b-df28-41d0-b9bb-037bb0a52bb1" />
-  <Project Path="FactoryPulse.Server/FactoryPulse.Server.csproj" />
+  <Project Path="D:/Lego/FactoryPulse/FactoryPulse.Domain/FactoryPulse.Domain.csproj" Id="bbaa55e4-1fc1-4eff-9f58-412729d47f0f" />
+  <Project Path="D:/Lego/FactoryPulse/FactoryPulse.Infrastructure/FactoryPulse.Infrastructure.csproj" Id="8f68206b-df28-41d0-b9bb-037bb0a52bb1" />
+  <Project Path="D:/Lego/FactoryPulse/FactoryPulse.API/FactoryPulse.API.csproj" />
 </Solution>
