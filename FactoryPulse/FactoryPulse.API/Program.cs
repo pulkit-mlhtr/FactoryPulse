@@ -1,10 +1,14 @@
 using FactoryPulse.API.Filters;
+using FactoryPulse.API.Hubs;
+using FactoryPulse.API.Services;
+using FactoryPulse.Application.Interface;
 using FactoryPulse.Application.Services;
-using FactoryPulse.Application.Services.Interface;
 using FactoryPulse.Domain.Interface;
 using FactoryPulse.Domain.Interfaces;
 using FactoryPulse.Infrastructure.Context;
 using FactoryPulse.Infrastructure.Repository;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,9 +26,12 @@ builder.Services.AddSwaggerGen();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+builder.Services.AddSignalR();
+
 builder.Services.AddTransient<AppExceptionFilter>();
 builder.Services.AddTransient<IEquipmentRepository,EquipmentRepository>();
 builder.Services.AddTransient<IEquipmentService, EquipmentService>();
+builder.Services.AddScoped<IEquipmentNotifier, EquipmentNotifierService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Postgres")));
@@ -32,7 +39,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<AppExceptionFilter>();
-});
+})
+// Register FluentValidation validators from this assembly
+.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<FactoryPulse.API.Validators.UpdateEquipmentStateRequestValidator>());
 
 var app = builder.Build();
 
@@ -50,7 +59,7 @@ app.UseSwagger();
 app.UseSwaggerUI();
 app.UseFileServer();
 
-// Map controller routes so Swagger UI can call your API endpoints
 app.MapControllers();
+app.MapHub<EquipmentHub>("/equipmentHub");
 
 app.Run();

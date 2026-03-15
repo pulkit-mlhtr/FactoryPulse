@@ -1,7 +1,6 @@
 using NUnit.Framework;
 using Moq;
 using FactoryPulse.API.Controller;
-using FactoryPulse.Application.Services.Interface;
 using FactoryPulse.Application.Services;
 using FactoryPulse.Application.DTOs;
 using FactoryPulse.Domain.Interface;
@@ -13,6 +12,7 @@ using System.Threading.Tasks;
 using System.Linq.Expressions;
 using System.Linq;
 using System.Reflection;
+using FactoryPulse.Application.Interface;
 
 namespace FactoryPulse.API.Tests
 {

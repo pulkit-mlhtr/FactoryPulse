@@ -1,4 +1,4 @@
-﻿using FactoryPulse.Application.Services.Interface;
+﻿using FactoryPulse.Application.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;

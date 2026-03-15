@@ -1,5 +1,5 @@
 ﻿using FactoryPulse.Application.DTOs;
-using FactoryPulse.Application.Services.Interface;
+using FactoryPulse.Application.Interface;
 using FactoryPulse.Domain.Entities;
 using FactoryPulse.Domain.Interface;
 using System;
@@ -9,7 +9,7 @@ using System.Text;
 
 namespace FactoryPulse.Application.Services
 {
-    public class EquipmentService(IEquipmentRepository equipmentRepository) : IEquipmentService
+    public class EquipmentService(IEquipmentRepository equipmentRepository, IEquipmentNotifier notifier) : IEquipmentService
     {
         public Task AddEquipmentsAsync(IList<Equipment> equipments)
         {
@@ -38,10 +38,8 @@ namespace FactoryPulse.Application.Services
             // Save changes
             await equipmentRepository.UpdateAsync(toUpdateEquipment[0]);
 
-            // Publish event for other systems (SignalR, RabbitMQ)
-            //await _bus.PublishAsync(new EquipmentStateChangedEvent(
-            //    equipment.EquipmentId,
-            //    equipment.CurrentState));
+            // Publish event for UI
+            await notifier.BroadcastStateChange(equipment);
         }
     }
 }

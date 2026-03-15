@@ -1,7 +1,7 @@
 ﻿using FactoryPulse.API.Request;
 using FactoryPulse.Application.DTOs;
+using FactoryPulse.Application.Interface;
 using FactoryPulse.Application.Services;
-using FactoryPulse.Application.Services.Interface;
 using FactoryPulse.Domain.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -33,14 +33,11 @@ namespace FactoryPulse.API.Controller
         [HttpPost("update")]
         public async Task<IActionResult> UpdateState(
             [FromBody] UpdateEquipmentStateRequest request)
-        {
-            if (request == null || request.EquipmentId == 0)
-                return BadRequest("Invalid equipment data");
-
-
+        {            
             await _service.UpdateEquipmentStateAsync(new EquipmentDto
             {
                 EquipmentId = request.EquipmentId,
+                ProductionLine = request.ProductionLine,
                 CurrentState = request.CurrentState,
                 RunningOrderId = request.RunningOrderId,
                 ChangedBy = request.ChangedBy,

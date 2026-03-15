@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace FactoryPulse.Application.Services.Interface
+namespace FactoryPulse.Application.Interface
 {
     public interface IEquipmentService
     {

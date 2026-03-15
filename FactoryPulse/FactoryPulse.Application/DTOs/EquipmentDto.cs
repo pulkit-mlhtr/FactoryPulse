@@ -9,7 +9,7 @@ namespace FactoryPulse.Application.DTOs
     {
         public long EquipmentId { get; set; }
         public EquipmentState CurrentState { get; set; }
-
+        public int ProductionLine { get; set; }
         public long? RunningOrderId { get; set; }
 
         public string ChangedBy { get; set; }
