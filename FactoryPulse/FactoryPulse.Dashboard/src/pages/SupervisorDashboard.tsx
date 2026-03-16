@@ -32,7 +32,7 @@ export default function SupervisorDashboard() {
   });
   return (
     <div>
-      <h2 className="text-xl font-semibold mb-4">Supervisor Dashboard</h2>
+      <h2 className="text-xl text-black font-semibold mb-4">Supervisor Dashboard</h2>
 
       <FactorySelector onEquipmentsLoaded={setCurrentEquipments} />
 

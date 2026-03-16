@@ -27,7 +27,7 @@ export default function WorkerDashboard() {
   });
   return (
     <div>
-      <h2 className="text-xl font-semibold mb-4">
+      <h2 className="text-xl text-black font-semibold mb-4">
         Worker Dashboard (Factory 101)
       </h2>
 

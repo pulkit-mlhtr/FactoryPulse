@@ -5,7 +5,7 @@ export const getEquipmentStatus = (state: number): string => {
         case EquipmentStateValues.Red:
             return "Stopped";
         case EquipmentStateValues.Yellow:
-            return "Starting Up / Winding Up";
+            return "Starting Up";
         case EquipmentStateValues.Green:
             return "Producing Normally";
         default:

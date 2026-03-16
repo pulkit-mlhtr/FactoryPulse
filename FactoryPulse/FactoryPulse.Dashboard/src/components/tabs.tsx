@@ -10,7 +10,7 @@ export default function Tabs() {
       <div className="flex gap-4 border-b mb-6">
         <button
           onClick={() => setActiveTab("worker")}
-          className={`px-4 py-2 ${
+                  className={`px-4 py-2 text-black hover:bg-blue-100 ${
             activeTab === "worker" ? "border-b-2 border-blue-500" : ""
           }`}
         >
@@ -19,7 +19,7 @@ export default function Tabs() {
 
         <button
           onClick={() => setActiveTab("supervisor")}
-          className={`px-4 py-2 ${
+                  className={`px-4 py-2 text-black hover:bg-blue-100 ${
             activeTab === "supervisor" ? "border-b-2 border-blue-500" : ""
           }`}
         >

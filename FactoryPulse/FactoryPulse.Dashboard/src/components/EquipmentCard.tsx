@@ -12,10 +12,10 @@ interface Props {
 export default function EquipmentCard({ equipment, onStateChange, onViewHistory }: Readonly<Props>) {   
     const { activeTab } = useTabs();
     return (
-        <div className="bg-white shadow rounded-lg p-4 flex flex-col gap-3">
-            <div className="flex justify-between">
-                <h3 className="font-bold">{equipment.equipmentCode}</h3>                
-                <div className="flex items-center gap-2">                    
+        <div className="bg-white shadow rounded-lg p-2 flex flex-col gap-2">
+            <div>
+                <h3 className="font-italic text-black">{equipment.equipmentCode}</h3>                
+                <div >                    
                     <StatusIndicator state={equipment.currentState} />
                 </div>
                 <div className="flex items-center gap-2">
@@ -23,7 +23,7 @@ export default function EquipmentCard({ equipment, onStateChange, onViewHistory 
                 </div>
             </div>
 
-            <div className="flex gap-2">
+            <div className="flex gap-2 justify-center">
                 {activeTab == "worker" &&
                     <><button
                     disabled={equipment.currentState === 1}
@@ -71,7 +71,7 @@ export default function EquipmentCard({ equipment, onStateChange, onViewHistory 
                     </button></>}
                 {activeTab == "supervisor" && <button
                     onClick={() => onViewHistory(equipment.equipmentId)}
-                    className="mt-2 bg-gray-200 px-2 py-1 rounded text-sm"
+                    className="w-full bg-white hover:bg-blue-50 text-blue-700 px-3 py-1.5 rounded-md text-xs font-bold border border-blue-200 transition-colors shadow-sm"
                 >
                     View History
                 </button>}

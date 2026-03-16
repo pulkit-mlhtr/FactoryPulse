@@ -19,7 +19,7 @@ export default function EquipmentHistoryModal({ equipmentId, onClose }: Props) {
                     </button>
                 </div>
 
-                <div className="max-h-80 overflow-auto">
+                <div className="max-h-80 overflow-auto text-black">
                     <table className="w-full text-sm">
                         <thead>
                             <tr className="border-b">
