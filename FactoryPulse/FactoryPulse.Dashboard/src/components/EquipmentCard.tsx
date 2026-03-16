@@ -53,7 +53,7 @@ export default function EquipmentCard({ equipment, onHistoryLoaded, showHistory 
                   })}
           className="bg-red-500 text-white px-2 py-1 rounded text-sm"
         >
-          Red
+          Stop
         </button>
 
         <button
@@ -67,7 +67,7 @@ export default function EquipmentCard({ equipment, onHistoryLoaded, showHistory 
                   })}
           className="bg-yellow-400 px-2 py-1 rounded text-sm"
         >
-          Yellow
+          Starting Up
         </button>
 
               <button
@@ -81,7 +81,7 @@ export default function EquipmentCard({ equipment, onHistoryLoaded, showHistory 
                   })}
           className="bg-green-500 text-white px-2 py-1 rounded text-sm"
         >
-          Green
+          Producing Normally
         </button>
 
         <button
