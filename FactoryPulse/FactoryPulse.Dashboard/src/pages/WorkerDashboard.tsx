@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import EquipmentGrid from "../components/EquipmentGrid";
 import { updateState } from "../api/equipmentApi";
 import { useEquipments } from "../hooks/useEquipment";
@@ -13,31 +12,19 @@ export default function WorkerDashboard() {
 
   useEquipments(FACTORY_ID, setEquipments);
 
-  //useEffect(() => {}, [equipments]);
-
   const onStateChange = async (request: UpdateEquipmentStateRequest) => {
-    const updatedEquipment = await updateState(request);
-
-    // setEquipments((prev) =>
-    //   prev.map((e) =>
-    //     e.equipmentId === updatedEquipment.equipmentId
-    //       ? { ...e, currentState: updatedEquipment.currentState }
-    //       : e,
-    //   ),
-    // );
+    await updateState(request);
   };
 
-   useSignalR((updatedEquipment: any) => {
-
-    setEquipments(prev =>
-      prev.map(e =>
+  useSignalR((updatedEquipment: any) => {
+    setEquipments((prev) =>
+      prev.map((e) =>
         e.equipmentId === updatedEquipment.equipmentId
           ? { ...e, currentState: updatedEquipment.currentState }
-          : e
-      )
-    )
-
-  })
+          : e,
+      ),
+    );
+  });
   return (
     <div>
       <h2 className="text-xl font-semibold mb-4">

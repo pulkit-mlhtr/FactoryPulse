@@ -1,7 +1,6 @@
 import * as signalR from "@microsoft/signalr";
 import { useEffect } from "react";
 import type { Equipment } from "../types/Equipment";
-import type { UpdateEquipmentStateRequest } from "../types/UpdateEquipmentStateRequest";
 
 export const useSignalR = (onUpdate: (equipment: Equipment) => void) => {
   useEffect(() => {
@@ -12,13 +11,15 @@ export const useSignalR = (onUpdate: (equipment: Equipment) => void) => {
       .withAutomaticReconnect()
       .build();
 
-    connection.on("equipmentStateUpdated", (equipment: UpdateEquipmentStateRequest) => {
+    connection.on("equipmentStateUpdated", (equipment: Equipment) => {
       onUpdate(equipment);
     });
 
       connection
           .start()
           .then(() => console.log("SignalR Connected"))      
-      .catch((err) => console.error("SignalR Error:", err));    
+      .catch((err) => console.error("SignalR Error:", err));   
+      
+      return () => connection.stop();
   }, []);
 };
