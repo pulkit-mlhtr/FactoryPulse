@@ -11,6 +11,7 @@ namespace FactoryPulse.Infrastructure.Context
         public DbSet<Equipment> Equipments { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Factory> Factories { get; set; }
         public DbSet<EquipmentStateHistory> EquipmentStateHistories { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options)

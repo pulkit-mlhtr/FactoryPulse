@@ -13,7 +13,18 @@ namespace FactoryPulse.Infrastructure.Configuration
         {
             builder.ToTable("factories");
             builder.HasKey(f => f.FactoryId);
-            builder.Property(f => f.FactoryCode).IsRequired().HasMaxLength(50);
+
+            builder.Property(f => f.FactoryCode)
+                .HasColumnName("factory_code")
+                .IsRequired().HasMaxLength(50);
+
+            builder.Property(f => f.FactoryId)
+                .HasColumnName("factory_id")
+                .IsRequired().HasMaxLength(50);
+
+            builder.Property(f => f.CountryId)
+                .HasColumnName("country_id")
+                .IsRequired().HasMaxLength(50);
 
             builder.HasOne(f => f.Country)
                    .WithMany(c => c.Factories)
