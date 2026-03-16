@@ -60,14 +60,14 @@ namespace FactoryPulse.Domain.Entities
             if (CurrentState == newState)
                 return;
 
-            var history = new EquipmentStateHistory(EquipmentId,
-                                                    CurrentState,
-                                                    newState,
-                                                    changedBy,
-                                                    orderId,
-                                                    reason);
+            //var history = new EquipmentStateHistory(EquipmentId,
+            //                                        CurrentState,
+            //                                        newState,
+            //                                        changedBy,
+            //                                        orderId,
+            //                                        reason);
 
-            StateHistories.Add(history);
+            //StateHistories.Add(history);
 
             CurrentState = newState;
             CurrentOrderId = orderId;

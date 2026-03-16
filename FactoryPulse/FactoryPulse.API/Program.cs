@@ -29,6 +29,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddSignalR();
 
 builder.Services.AddTransient<AppExceptionFilter>();
+builder.Services.AddTransient<IEquipmentStateHistoryRepository, EquipmentStateHistoryRepository>();
 builder.Services.AddTransient<IEquipmentRepository,EquipmentRepository>();
 builder.Services.AddTransient<IEquipmentService, EquipmentService>();
 builder.Services.AddScoped<IEquipmentNotifier, EquipmentNotifierService>();

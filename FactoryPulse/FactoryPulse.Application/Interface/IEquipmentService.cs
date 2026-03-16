@@ -14,6 +14,8 @@ namespace FactoryPulse.Application.Interface
 
         Task<IList<Equipment>> GetEquipmentsAsync(int factoryId, int? productionLine);
 
+        Task<IEnumerable<EquipmentStateHistory>> GetEquipmentStateHistoriesAsync(int equipmentId);
+
         Task UpdateEquipmentStateAsync(EquipmentDto equipment);
 
     }

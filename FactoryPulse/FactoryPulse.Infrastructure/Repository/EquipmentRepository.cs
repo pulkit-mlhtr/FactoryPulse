@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using FactoryPulse.Domain.Entities;
-using FactoryPulse.Infrastructure.Context;
+﻿using FactoryPulse.Domain.Entities;
 using FactoryPulse.Domain.Interface;
+using FactoryPulse.Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace FactoryPulse.Infrastructure.Repository
@@ -15,7 +11,7 @@ namespace FactoryPulse.Infrastructure.Repository
         public async Task<List<Equipment>> GetAsync(Expression<Func<Equipment,bool>> filter)
         {
             return await context.Equipments.Where(filter).ToListAsync();
-        }       
+        }      
 
         public async Task UpdateAsync(Equipment equipment)
         {

@@ -7,6 +7,7 @@ namespace FactoryPulse.Domain.Interfaces
 {
     public interface IEquipmentStateHistoryRepository
     {
-        Task AddAsync(EquipmentStateHistory log);
+        Task AddAsync(IEnumerable<EquipmentStateHistory> logs);
+        Task<IList<EquipmentStateHistory>> GetByEquipmentIdAsync(long equipmentId);
     }
 }

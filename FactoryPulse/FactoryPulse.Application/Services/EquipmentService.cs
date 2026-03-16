@@ -2,6 +2,7 @@
 using FactoryPulse.Application.Interface;
 using FactoryPulse.Domain.Entities;
 using FactoryPulse.Domain.Interface;
+using FactoryPulse.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -9,7 +10,9 @@ using System.Text;
 
 namespace FactoryPulse.Application.Services
 {
-    public class EquipmentService(IEquipmentRepository equipmentRepository, IEquipmentNotifier notifier) : IEquipmentService
+    public class EquipmentService(IEquipmentRepository equipmentRepository, 
+        IEquipmentStateHistoryRepository equipmentStateHistoryRepository, 
+        IEquipmentNotifier notifier) : IEquipmentService
     {
         public Task AddEquipmentsAsync(IList<Equipment> equipments)
         {
@@ -20,6 +23,11 @@ namespace FactoryPulse.Application.Services
         {
             return await equipmentRepository
                 .GetAsync(e => e.FactoryId == factoryId && ((productionLine == null) || e.ProductionLineId == productionLine));
+        }
+
+        public async Task<IEnumerable<EquipmentStateHistory>> GetEquipmentStateHistoriesAsync(int equipmentId)
+        {
+            return await equipmentStateHistoryRepository.GetByEquipmentIdAsync(equipmentId);
         }
 
         public async Task UpdateEquipmentStateAsync(EquipmentDto equipment)
@@ -37,6 +45,14 @@ namespace FactoryPulse.Application.Services
 
             // Save changes
             await equipmentRepository.UpdateAsync(toUpdateEquipment[0]);
+
+            //Register state change in history
+           await equipmentStateHistoryRepository.AddAsync([new EquipmentStateHistory(toUpdateEquipment[0].EquipmentId,
+                                                    toUpdateEquipment[0].CurrentState,
+                                                    equipment.CurrentState,
+                                                    equipment.ChangedBy,
+                                                    equipment.RunningOrderId,
+                                                    equipment.ReasonOfStateChange)]);
 
             // Publish event for UI
             await notifier.BroadcastStateChange(equipment);

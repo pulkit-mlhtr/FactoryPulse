@@ -1,9 +1,6 @@
 ﻿using FactoryPulse.API.Request;
 using FactoryPulse.Application.DTOs;
 using FactoryPulse.Application.Interface;
-using FactoryPulse.Application.Services;
-using FactoryPulse.Domain.Enums;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FactoryPulse.API.Controller
@@ -27,6 +24,17 @@ namespace FactoryPulse.API.Controller
                 throw new BadHttpRequestException("Invalid input");
             }
             var equipments = await _service.GetEquipmentsAsync(factoryId, productionLineId);
+            return Ok(equipments);
+        }
+
+        [HttpGet("{equipmentId}/state-history")]
+        public async Task<IActionResult> GetStateHistories(int equipmentId)
+        {
+            if (equipmentId == 0)
+            {
+                throw new BadHttpRequestException("Invalid input");
+            }
+            var equipments = await _service.GetEquipmentStateHistoriesAsync(equipmentId);
             return Ok(equipments);
         }
 

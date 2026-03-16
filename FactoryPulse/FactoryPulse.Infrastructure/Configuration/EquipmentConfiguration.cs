@@ -10,8 +10,10 @@ namespace FactoryPulse.Infrastructure.Configuration
         {
             builder.ToTable("equipments");
             builder.HasKey(e => e.EquipmentId);
+
             builder.Property(e => e.EquipmentId)
                 .HasColumnName("equipment_id");
+
             builder.Property(e => e.EquipmentCode)
                 .HasColumnName("equipment_code")
                 .IsRequired().HasMaxLength(100);
@@ -22,15 +24,20 @@ namespace FactoryPulse.Infrastructure.Configuration
 
             builder.Property(e => e.FactoryId)
                 .HasColumnName("factory_id");
+
                 builder.Property(e => e.ProductionLineId)
                 .HasColumnName("production_line_id");
+
             builder.Property(e => e.MachineNumber)
                 .HasColumnName("machine_number");
+
             builder.Property(e => e.CurrentState)
                 .HasColumnName("current_state")                
                 .IsRequired();
+
             builder.Property(e => e.CurrentOrderId)
                 .HasColumnName("current_order_id");
+
             builder.Property(e => e.UpdatedAt)
                 .HasColumnName("updated_at")
                 .IsRequired();
@@ -43,6 +50,11 @@ namespace FactoryPulse.Infrastructure.Configuration
                    .WithOne(o => o.Equipment)
                    .OnDelete(DeleteBehavior.SetNull)
                    .HasForeignKey(o => o.EquipmentId);
+
+            builder.HasMany(e => e.StateHistories)
+           .WithOne(h => h.Equipment)
+           .HasForeignKey(h => h.EquipmentId)
+           .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
