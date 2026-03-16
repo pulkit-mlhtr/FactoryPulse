@@ -2,6 +2,7 @@ import type { Equipment } from "../types/Equipment";
 import StatusIndicator from "./StatusIndicator";
 import { getEquipmentStatus } from "../util/equipmentStatusHelper"
 import { useTabs } from "../context/tabContext";
+import OrderIndicator from "./OrderIndicator";
 interface Props {
     equipment: Equipment;
     onStateChange: any
@@ -13,9 +14,12 @@ export default function EquipmentCard({ equipment, onStateChange, onViewHistory 
     return (
         <div className="bg-white shadow rounded-lg p-4 flex flex-col gap-3">
             <div className="flex justify-between">
-                <h3 className="font-bold">{equipment.equipmentCode}</h3>
+                <h3 className="font-bold">{equipment.equipmentCode}</h3>                
                 <div className="flex items-center gap-2">                    
                     <StatusIndicator state={equipment.currentState} />
+                </div>
+                <div className="flex items-center gap-2">
+                    <OrderIndicator orderNumber={equipment.currentOrderId} />
                 </div>
             </div>
 
@@ -27,7 +31,7 @@ export default function EquipmentCard({ equipment, onStateChange, onViewHistory 
                         equipmentId: equipment.equipmentId,
                         currentState: 1,
                         productionLine: equipment.productionLineId,
-                        runningOrderId: equipment.runningOrder,
+                        runningOrderId: equipment.currentOrderId,
                         changedBy: "Worker",
                         reasonOfStateChange: "Routine Maintenance"
                     })}
@@ -42,7 +46,7 @@ export default function EquipmentCard({ equipment, onStateChange, onViewHistory 
                         equipmentId: equipment.equipmentId,
                         currentState: 2,
                         productionLine: equipment.productionLineId,
-                        runningOrderId: equipment.runningOrder,
+                        runningOrderId: equipment.currentOrderId,
                         changedBy: "Worker",
                         reasonOfStateChange: "Mould Changing / Cleanup"
                     })}
@@ -57,7 +61,7 @@ export default function EquipmentCard({ equipment, onStateChange, onViewHistory 
                         equipmentId: equipment.equipmentId,
                         currentState: 3,
                         productionLine: equipment.productionLineId,
-                        runningOrderId: equipment.runningOrder,
+                        runningOrderId: equipment.currentOrderId,
                         changedBy: "Worker",
                         reasonOfStateChange: "Working Normally"
                     })}

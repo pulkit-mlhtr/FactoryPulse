@@ -9,7 +9,7 @@ export interface Equipment {
     equipmentId: string
     equipmentCode: string
     currentState: number
-    runningOrder: number | undefined
+    currentOrderId: number | undefined
     productionLineId: number
 
 }

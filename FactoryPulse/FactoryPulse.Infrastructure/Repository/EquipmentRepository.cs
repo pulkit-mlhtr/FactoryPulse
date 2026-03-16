@@ -10,7 +10,9 @@ namespace FactoryPulse.Infrastructure.Repository
     {       
         public async Task<List<Equipment>> GetAsync(Expression<Func<Equipment,bool>> filter)
         {
-            return await context.Equipments.Where(filter).ToListAsync();
+            return await context.Equipments
+                .Where(filter)
+                .OrderBy(o=>o.EquipmentId).ToListAsync();
         }      
 
         public async Task UpdateAsync(Equipment equipment)
