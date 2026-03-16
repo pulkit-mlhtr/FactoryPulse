@@ -58,16 +58,7 @@ namespace FactoryPulse.Domain.Entities
         public void UpdateState(EquipmentState newState, long? orderId, string changedBy, string reason = null)
         {
             if (CurrentState == newState)
-                return;
-
-            //var history = new EquipmentStateHistory(EquipmentId,
-            //                                        CurrentState,
-            //                                        newState,
-            //                                        changedBy,
-            //                                        orderId,
-            //                                        reason);
-
-            //StateHistories.Add(history);
+                return;       
 
             CurrentState = newState;
             CurrentOrderId = orderId;

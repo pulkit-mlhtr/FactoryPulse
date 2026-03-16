@@ -1,6 +1,7 @@
 ﻿using FactoryPulse.Application.DTOs;
 using FactoryPulse.Application.Interface;
 using FactoryPulse.Domain.Entities;
+using FactoryPulse.Domain.Enums;
 using FactoryPulse.Domain.Interface;
 using FactoryPulse.Domain.Interfaces;
 using System;
@@ -38,6 +39,8 @@ namespace FactoryPulse.Application.Services
             if (toUpdateEquipment == null || toUpdateEquipment.Count == 0)
                 throw new KeyNotFoundException("Equipment not found");
 
+            EquipmentState previousEquipmentState = toUpdateEquipment[0].CurrentState;
+
             // Domain method handles validation
             toUpdateEquipment[0]
                 .UpdateState(equipment.CurrentState, equipment.RunningOrderId, 
@@ -48,10 +51,10 @@ namespace FactoryPulse.Application.Services
 
             //Register state change in history
            await equipmentStateHistoryRepository.AddAsync([new EquipmentStateHistory(toUpdateEquipment[0].EquipmentId,
-                                                    toUpdateEquipment[0].CurrentState,
+                                                    previousEquipmentState,
                                                     equipment.CurrentState,
                                                     equipment.ChangedBy,
-                                                    equipment.RunningOrderId,
+                                                    equipment.RunningOrderId ?? 0,
                                                     equipment.ReasonOfStateChange)]);
 
             // Publish event for UI

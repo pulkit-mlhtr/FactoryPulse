@@ -9,6 +9,7 @@ using FactoryPulse.Infrastructure.Context;
 using FactoryPulse.Infrastructure.Repository;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,20 +32,38 @@ builder.Services.AddSignalR();
 builder.Services.AddTransient<AppExceptionFilter>();
 builder.Services.AddTransient<IEquipmentStateHistoryRepository, EquipmentStateHistoryRepository>();
 builder.Services.AddTransient<IEquipmentRepository,EquipmentRepository>();
+builder.Services.AddTransient<IFactoryRepository, FactoryRepository>();
+builder.Services.AddTransient<IFactoryService,FactoryService>();
 builder.Services.AddTransient<IEquipmentService, EquipmentService>();
 builder.Services.AddScoped<IEquipmentNotifier, EquipmentNotifierService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Postgres")));
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+    options.AddPolicy("SignalRPolicy", policy =>
+    {
+        policy.WithOrigins("http://localhost:59705") 
+               .AllowAnyHeader()
+               .AllowAnyMethod()
+               .AllowCredentials();
+    });
+});
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<AppExceptionFilter>();
-})
-// Register FluentValidation validators from this assembly
-.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<FactoryPulse.API.Validators.UpdateEquipmentStateRequestValidator>());
+});
 
 var app = builder.Build();
+
+app.UseCors("SignalRPolicy");
+app.UseCors("AllowAll");
 
 // Configure the HTTP request pipeline.
 app.UseExceptionHandler();
@@ -55,6 +74,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapDefaultEndpoints();
+
+
 app.UseRouting();
 app.UseSwagger();
 app.UseSwaggerUI();
