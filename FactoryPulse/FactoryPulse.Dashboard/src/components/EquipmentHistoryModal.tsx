@@ -1,11 +1,13 @@
-import type { EquipmentHistory } from "../types/EquipmentHistory";
-import { getEquipmentStateColor } from "../util/getEquipmentStateColor"
+import { getEquipmentStatus } from "../util/equipmentStatusHelper"
+import { useEquipmentHistories } from "../hooks/useEquipmentHistories";
 interface Props {
-    histories: EquipmentHistory[];
+    equipmentId: number;
     onClose: () => void;
 }
 
-export default function EquipmentHistoryModal({ histories, onClose }: Props) {
+export default function EquipmentHistoryModal({ equipmentId, onClose }: Props) {
+    const { histories } = useEquipmentHistories(equipmentId);
+  
     return (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
             <div className="bg-white rounded-lg p-6 w-[500px]">
@@ -32,8 +34,8 @@ export default function EquipmentHistoryModal({ histories, onClose }: Props) {
                         <tbody>
                             {histories.length>0 ? histories.map((h, i) => (
                                 <tr key={i} className="border-b">
-                                    <td>{getEquipmentStateColor(h.previousState)}</td>
-                                    <td>{getEquipmentStateColor(h.newState)}</td>
+                                    <td>{getEquipmentStatus(h.previousState)}</td>
+                                    <td>{getEquipmentStatus(h.newState)}</td>
                                     <td>{h.orderId}</td>
                                     <td>{h.changedBy}</td>
                                     <td>{new Date(h.changedAt).toLocaleString()}</td>

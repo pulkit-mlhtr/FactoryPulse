@@ -1,18 +1,15 @@
 import { useState } from "react";
 import type { Equipment } from "../types/Equipment";
-import type { EquipmentHistory } from "../types/EquipmentHistory";
 import EquipmentCard from "./EquipmentCard";
 import EquipmentHistoryModal from "./EquipmentHistoryModal";
 
 interface Props {
-  equipments: Equipment[];
+    equipments: Equipment[]
+    onStateChange?: any
+    onViewHistory?: any
 }
 
-export default function EquipmentGrid({ equipments }: Props) {
-    const [showHistory, setShowHistory] =
-        useState(false);
-    const [histories, setHistories] =
-        useState<EquipmentHistory[]>([])
+export default function EquipmentGrid({ equipments, onStateChange, onViewHistory }: Props) {
 
   return (
     <div className="grid grid-cols-4 gap-6">
@@ -20,18 +17,10 @@ export default function EquipmentGrid({ equipments }: Props) {
         <EquipmentCard
               key={e.equipmentId}
               equipment={e}
-              onHistoryLoaded={setHistories}
-              showHistory={setShowHistory}
+              onStateChange={onStateChange}
+              onViewHistory={onViewHistory}
           />        
-      ))}
-          {showHistory && (
-
-              <EquipmentHistoryModal
-                  histories={histories}
-                  onClose={() => setShowHistory(false)}
-              />
-
-          )}
+      ))}          
     </div>
   );
 }

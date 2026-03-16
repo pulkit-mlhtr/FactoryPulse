@@ -1,4 +1,5 @@
 using FactoryPulse.API.Controller;
+using FactoryPulse.API.Hubs;
 using FactoryPulse.API.Request;
 using FactoryPulse.Application.DTOs;
 using FactoryPulse.Application.Interface;
@@ -8,6 +9,7 @@ using FactoryPulse.Domain.Enums;
 using FactoryPulse.Domain.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using Moq;
 using NUnit.Framework;
@@ -23,13 +25,20 @@ namespace FactoryPulse.API.Tests
     public class EquipmentControllerTests
     {
         private EquipmentController _controller;
-        private Mock<IEquipmentService> _serviceMock;
+        private Mock<IEquipmentService> _serviceMock;        
+        private Mock<IHubContext<EquipmentHub>> _mockHubContext;  
+        private Mock<IHubClients> _mockClients;  
+        private Mock<IClientProxy> _mockClientProxy;  
+        
 
         [SetUp]
         public void Setup()
         {
+            _mockHubContext = new Mock<IHubContext<EquipmentHub>>();
+            _mockClients = new Mock<IHubClients>();
+            _mockClientProxy = new Mock<IClientProxy>();
             _serviceMock = new Mock<IEquipmentService>();
-            _controller = new EquipmentController(_serviceMock.Object);
+            _controller = new EquipmentController(_serviceMock.Object, _mockHubContext.Object);
         }
 
         [Test]
@@ -52,10 +61,10 @@ namespace FactoryPulse.API.Tests
 
             var list = new List<Equipment> { equipment };
 
-            var serviceMock = new Mock<IEquipmentService>();
-            serviceMock.Setup(s => s.GetEquipmentsAsync(101)).ReturnsAsync(list);
+            _mockHubContext.Setup(h => h.Clients).Returns(_mockClients.Object);
+            _mockClients.Setup(c => c.All).Returns(_mockClientProxy.Object);
+            _serviceMock.Setup(s => s.GetEquipmentsAsync(101)).ReturnsAsync(list);
 
-            _controller = new EquipmentController(serviceMock.Object);
 
             var result = await _controller.GetEquipments(101) as OkObjectResult;
 
@@ -79,10 +88,9 @@ namespace FactoryPulse.API.Tests
                 ReasonOfStateChange = "reason"
             };
 
-            var serviceMock = new Mock<IEquipmentService>();
-            serviceMock.Setup(s => s.UpdateEquipmentStateAsync(It.IsAny<EquipmentDto>())).Returns(Task.CompletedTask);
-
-            _controller = new EquipmentController(serviceMock.Object);
+            _mockHubContext.Setup(h => h.Clients).Returns(_mockClients.Object);
+            _mockClients.Setup(c => c.All).Returns(_mockClientProxy.Object);
+            _serviceMock.Setup(s => s.UpdateEquipmentStateAsync(It.IsAny<EquipmentDto>())).Returns(Task.CompletedTask);
 
             var result = await _controller.UpdateState(request) as OkObjectResult;
 

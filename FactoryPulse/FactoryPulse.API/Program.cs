@@ -1,15 +1,11 @@
 using FactoryPulse.API.Filters;
 using FactoryPulse.API.Hubs;
-using FactoryPulse.API.Services;
 using FactoryPulse.Application.Interface;
 using FactoryPulse.Application.Services;
 using FactoryPulse.Domain.Interface;
 using FactoryPulse.Domain.Interfaces;
 using FactoryPulse.Infrastructure.Context;
 using FactoryPulse.Infrastructure.Repository;
-using FluentValidation;
-using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,26 +31,18 @@ builder.Services.AddTransient<IEquipmentRepository,EquipmentRepository>();
 builder.Services.AddTransient<IFactoryRepository, FactoryRepository>();
 builder.Services.AddTransient<IFactoryService,FactoryService>();
 builder.Services.AddTransient<IEquipmentService, EquipmentService>();
-builder.Services.AddScoped<IEquipmentNotifier, EquipmentNotifierService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Postgres")));
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
-    {
-        policy.AllowAnyOrigin()
+    options.AddPolicy("AllowAll",
+        p => p.AllowAnyHeader()
               .AllowAnyMethod()
-              .AllowAnyHeader();
-    });
-    options.AddPolicy("SignalRPolicy", policy =>
-    {
-        policy.WithOrigins("http://localhost:59705") 
-               .AllowAnyHeader()
-               .AllowAnyMethod()
-               .AllowCredentials();
-    });
+              .AllowAnyOrigin());
 });
+
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<AppExceptionFilter>();
@@ -62,7 +50,6 @@ builder.Services.AddControllers(options =>
 
 var app = builder.Build();
 
-app.UseCors("SignalRPolicy");
 app.UseCors("AllowAll");
 
 // Configure the HTTP request pipeline.

@@ -12,8 +12,7 @@ using System.Text;
 namespace FactoryPulse.Application.Services
 {
     public class EquipmentService(IEquipmentRepository equipmentRepository, 
-        IEquipmentStateHistoryRepository equipmentStateHistoryRepository, 
-        IEquipmentNotifier notifier) : IEquipmentService
+        IEquipmentStateHistoryRepository equipmentStateHistoryRepository) : IEquipmentService
     {
         public Task AddEquipmentsAsync(IList<Equipment> equipments)
         {
@@ -55,10 +54,7 @@ namespace FactoryPulse.Application.Services
                                                     equipment.CurrentState,
                                                     equipment.ChangedBy,
                                                     equipment.RunningOrderId ?? 0,
-                                                    equipment.ReasonOfStateChange)]);
-
-            // Publish event for UI
-            await notifier.BroadcastStateChange(equipment);
+                                                    equipment.ReasonOfStateChange)]);          
         }
     }
 }

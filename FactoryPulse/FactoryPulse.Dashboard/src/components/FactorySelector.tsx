@@ -8,13 +8,13 @@ interface Props {
 }
 
 export default function FactorySelector({ onEquipmentsLoaded }: Readonly<Props>) {
-  const { factories, selectedFactory, setSelectedFactory } = useFactories();
+  const { factories, selectedFactory, setSelectedFactory } = useFactories(1);
 
   useEffect(() => {
     if (!selectedFactory) return;
 
     const loadEquipments = async () => {
-      const res = await getEquipments(selectedFactory,null);
+      const res = await getEquipments(selectedFactory);
 
       onEquipmentsLoaded(res);
     };

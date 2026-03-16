@@ -1,7 +1,9 @@
-﻿using FactoryPulse.API.Request;
+﻿using FactoryPulse.API.Hubs;
+using FactoryPulse.API.Request;
 using FactoryPulse.Application.DTOs;
 using FactoryPulse.Application.Interface;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace FactoryPulse.API.Controller
 {
@@ -10,10 +12,13 @@ namespace FactoryPulse.API.Controller
     public class EquipmentController : ControllerBase
     {
         private readonly IEquipmentService _service;
+        private readonly IHubContext<EquipmentHub> _hub;
 
-        public EquipmentController(IEquipmentService service)
+        public EquipmentController(IEquipmentService service,
+       IHubContext<EquipmentHub> hub)
         {
             _service = service;
+            _hub = hub;
         }
 
         [HttpGet("{factoryId}")]
@@ -41,13 +46,13 @@ namespace FactoryPulse.API.Controller
         [HttpPost("update")]
         public async Task<IActionResult> UpdateState(
             [FromBody] UpdateEquipmentStateRequest request)
-        {    
-            
+        {                
             if(request == null)
             {
                 return BadRequest("Request body cannot be null");
             }
-            await _service.UpdateEquipmentStateAsync(new EquipmentDto
+
+            var toBeUpdated = new EquipmentDto
             {
                 EquipmentId = request.EquipmentId,
                 ProductionLine = request.ProductionLine,
@@ -55,9 +60,14 @@ namespace FactoryPulse.API.Controller
                 RunningOrderId = request.RunningOrderId,
                 ChangedBy = request.ChangedBy,
                 ReasonOfStateChange = request.ReasonOfStateChange
-            });
+            };
+            await _service.UpdateEquipmentStateAsync(toBeUpdated);
 
-            return Ok(new { Message = "Equipment state updated successfully" });
+            await _hub.Clients.All.SendAsync(
+            "equipmentStateUpdated",
+            toBeUpdated);
+
+            return Ok(request);
         }
     }
 }

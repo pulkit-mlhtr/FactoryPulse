@@ -1,6 +1,5 @@
 export interface UpdateEquipmentStateRequest {
-
-    equipmentId: string
+    equipmentId: number
     currentState: number
     productionLine: number
     runningOrderId?: number

@@ -10,6 +10,11 @@ export default defineConfig({
       '/api': {
         target: process.env.SERVER_HTTPS || process.env.SERVER_HTTP,
         changeOrigin: true
+      },
+      "/equipmentHub": {
+        target: "https://localhost:7349",
+        ws: true,
+        secure: false
       }
     }
   }
