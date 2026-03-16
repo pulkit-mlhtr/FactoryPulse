@@ -1,5 +1,5 @@
 import { updateState, getEquipmentHistory } from "../api/equipmentApi";
-import type { Equipment, EquipmentState } from "../types/Equipment";
+import type { Equipment } from "../types/Equipment";
 import StatusIndicator from "./StatusIndicator";
 import type { EquipmentHistory } from "../types/EquipmentHistory";
 import type { SetStateAction } from "react";

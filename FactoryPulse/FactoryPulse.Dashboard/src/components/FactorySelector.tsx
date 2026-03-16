@@ -14,7 +14,7 @@ export default function FactorySelector({ onEquipmentsLoaded }: Readonly<Props>)
     if (!selectedFactory) return;
 
     const loadEquipments = async () => {
-      const res = await getEquipments(selectedFactory);
+      const res = await getEquipments(selectedFactory,null);
 
       onEquipmentsLoaded(res);
     };

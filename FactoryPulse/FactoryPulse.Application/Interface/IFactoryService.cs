@@ -7,6 +7,6 @@ namespace FactoryPulse.Application.Interface
 {
     public interface IFactoryService
     {
-        Task<IList<FactoryDto>> GetFactoriesAsync();
+        Task<IList<FactoryDto>> GetFactoriesAsync(int countryId);
     }
 }

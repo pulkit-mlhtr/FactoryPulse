@@ -20,10 +20,10 @@ namespace FactoryPulse.Application.Services
             throw new NotImplementedException();
         }
 
-        public async Task<IList<Equipment>> GetEquipmentsAsync(int factoryId, int? productionLine)
+        public async Task<IList<Equipment>> GetEquipmentsAsync(int factoryId)
         {
             return await equipmentRepository
-                .GetAsync(e => e.FactoryId == factoryId && ((productionLine == null) || e.ProductionLineId == productionLine));
+                .GetAsync(e => e.FactoryId == factoryId);
         }
 
         public async Task<IEnumerable<EquipmentStateHistory>> GetEquipmentStateHistoriesAsync(int equipmentId)

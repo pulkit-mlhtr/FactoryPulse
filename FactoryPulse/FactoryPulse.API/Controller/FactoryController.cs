@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FactoryPulse.API.Controller
 {
     [ApiController]
-    [Route("api/factory")]
+    [Route("api/[controller]")]
     public class FactoryController : ControllerBase
     {
         private readonly IFactoryService _service;
@@ -13,10 +13,10 @@ namespace FactoryPulse.API.Controller
         {
             _service = service;
         }
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        [HttpGet("{countryId}")]
+        public async Task<IActionResult> Get(int countryId)
         {
-            return Ok(await _service.GetFactoriesAsync());
+            return Ok(await _service.GetFactoriesAsync(countryId));
         }
     }
 }

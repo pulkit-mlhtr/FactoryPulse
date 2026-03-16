@@ -9,9 +9,9 @@ namespace FactoryPulse.Application.Services
 {
     public class FactoryService(IFactoryRepository factoryRepository) : IFactoryService
     {
-        public async Task<IList<FactoryDto>> GetFactoriesAsync()
+        public async Task<IList<FactoryDto>> GetFactoriesAsync(int countryId)
         {
-            var response = await factoryRepository.GetFactoriesAsync();
+            var response = await factoryRepository.GetFactoriesAsync(x=> (countryId <= 0) || x.CountryId == countryId);
             return [.. response.Select(f => new FactoryDto
             {
                 FactoryId = f.FactoryId,

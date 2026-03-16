@@ -16,14 +16,14 @@ namespace FactoryPulse.API.Controller
             _service = service;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetEquipments([FromQuery] int factoryId,[FromQuery] int? productionLineId = null)
+        [HttpGet("{factoryId}")]
+        public async Task<IActionResult> GetEquipments([FromRoute] int factoryId)
         {
             if(factoryId == 0)
             {
                 throw new BadHttpRequestException("Invalid input");
             }
-            var equipments = await _service.GetEquipmentsAsync(factoryId, productionLineId);
+            var equipments = await _service.GetEquipmentsAsync(factoryId);
             return Ok(equipments);
         }
 
@@ -41,7 +41,12 @@ namespace FactoryPulse.API.Controller
         [HttpPost("update")]
         public async Task<IActionResult> UpdateState(
             [FromBody] UpdateEquipmentStateRequest request)
-        {            
+        {    
+            
+            if(request == null)
+            {
+                return BadRequest("Request body cannot be null");
+            }
             await _service.UpdateEquipmentStateAsync(new EquipmentDto
             {
                 EquipmentId = request.EquipmentId,

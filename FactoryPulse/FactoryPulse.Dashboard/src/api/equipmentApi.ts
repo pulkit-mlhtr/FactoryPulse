@@ -2,7 +2,7 @@ import type { UpdateEquipmentStateRequest } from "../types/UpdateEquipmentStateR
 import API from "./baseApi";
 
 export const getEquipments = (factoryId:number) =>
-    API.get(`/equipments?factoryId=${factoryId}`);
+    API.get(`/equipments/${factoryId}`);
 
 export const updateState = (
     request: UpdateEquipmentStateRequest

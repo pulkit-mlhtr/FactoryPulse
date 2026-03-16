@@ -1,4 +1,4 @@
 import API from "./baseApi";
 
-export const getFactories = () =>
-    API.get("/factory")
+export const getFactories = (countryId:number) =>
+    API.get(`/factory/${1}`)
